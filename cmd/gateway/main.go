@@ -1,16 +1,30 @@
 package main
 
-import "fmt"
-import "github.com/gofiber/fiber/v2"
+import (
+	"fmt"
+	"github.com/gofiber/fiber/v2"
+	"log"
+	"time"
+)
 
 
 func main() {
-  fmt.Println("Hello, World!")
   app := fiber.New()
   
-  app.Get("/", func(c *fiber.Ctx) error {
+  app.Get("/uses", func(c *fiber.Ctx) error {
+		return c.SendString("GET uses:\n\t/\n\t/hello\n\t/uses")
+  })
+
+  app.Get("/hello", func(c *fiber.Ctx) error {
   	return c.SendString("Hello, World!")
   })
+
+  app.Get("/", func(c *fiber.Ctx) error {
+		currentTime := time.Now()
+		unixTime := currentTime.Unix()
+		routeResponse := fmt.Sprintf("{\"message\":\"%s\",\"timestamp\": %d}","My name is Zach Boggs",unixTime)
+		return c.SendString(routeResponse)
+  })
   
-  app.Listen(":3000")
+  log.Fatal(app.Listen(":80"))
 }
