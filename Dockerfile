@@ -1,19 +1,22 @@
 FROM golang:1.25-trixie AS base
 
 
+
 WORKDIR /build
 
-# Install dependencies for our go program
-RUN go mod init apiCode
-RUN go mod download
+# copying over the files from the current directory into the docker container
+COPY . .
 
-# copying the source files into the container
-COPY ../cmd/gateway/*.go ./
+# Install dependencies for our go program
+RUN go mod init go-module
+RUN go mod tidy
+
+WORKDIR ./cmd/gateway
 
 # building the program
-RUN CGO_ENABLED=0 GOOS=linux go build -o go-program
+RUN CGO_ENABLED=0 GOOS=linux go build -o /build/go-program
 
-# exposing port 80, I can also choose to use 8080 for http traffic
+# exposing port 80, I can also choose to use 8080 for http traffic but the automatic tester uses port 80
 EXPOSE 80
 
 # Start the application
