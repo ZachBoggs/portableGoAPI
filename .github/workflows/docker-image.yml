@@ -9,10 +9,10 @@ on:
 jobs:
 
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag go-api-container:$(date +%s)
+    - uses: actions/checkout@v4
+      run: docker build . --file Dockerfile --tag go-api-container
+      run: docker run go-api-container -p 80:80
