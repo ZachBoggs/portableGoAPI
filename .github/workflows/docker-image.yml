@@ -17,6 +17,3 @@ jobs:
 
     - name: build the Docker image
       run: docker build . --file Dockerfile --tag go-api-container
-
-    - name: run the container
-      run: docker run go-api-container -p 80:80
