@@ -21,7 +21,7 @@ func main() {
 
   app.Get("/", func(c *fiber.Ctx) error {
 		currentTime := time.Now()
-		unixTime := currentTime.Unix()
+		unixTime := currentTime.UnixMilli()
 		routeResponse := fmt.Sprintf("{\"message\":\"%s\",\"timestamp\":%d}","My name is Zach Boggs",unixTime)
 		return c.SendString(routeResponse)
   })
