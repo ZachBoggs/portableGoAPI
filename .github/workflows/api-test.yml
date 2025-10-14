@@ -6,8 +6,24 @@ on:
     types: [completed]
 
 jobs:
-  build:
+  test-api:
     runs-on: ubuntu-latest
+
     steps:
+    - name: checkout code
+      uses: actions/checkout@v4
+
+    - name: build the Docker image
+      run: docker build . --file Dockerfile --tag go-api-container
+
+    - name: run the Docker image
+      run: docker run -d -p 80:80 go-api-container
+
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@master
+
+    - name: close container
+      if: always()
+      run: |
+        docker logs go-api-container || true
+        docker rm -f go-api-container || true
