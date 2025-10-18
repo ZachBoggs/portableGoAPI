@@ -16,4 +16,4 @@ jobs:
       uses: actions/checkout@v4
 
     - name: build the Docker image
-      run: docker build . --file Dockerfile --tag go-api-container
+      run: docker build . -f Dockerfile -t ${{ vars.DOCKERHUB_IMAGE }}:snapshot
