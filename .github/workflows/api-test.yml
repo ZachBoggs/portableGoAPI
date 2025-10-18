@@ -13,14 +13,23 @@ jobs:
     - name: checkout code
       uses: actions/checkout@v4
 
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ vars.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
     - name: build the Docker image
-      run: docker build . --file Dockerfile --tag go-api-container
+      run: docker build . -f Dockerfile -t ${{ vars.DOCKERHUB_USERNAME }}/liatrio-apprenticeship-exercise:snapshot
 
     - name: run the Docker image
-      run: docker run -d -p 80:80 go-api-container
+      run: docker run -d -p 80:80 ${{ vars.DOCKERHUB_USERNAME }}/liatrio-apprenticeship-exercise:snapshot
 
     - name: run tests
       uses: liatrio/github-actions/apprentice-action@0b41561cca6822cc8d880fe0e49e7807a41fdf91
+
+    - name: Push Docker image
+      run: docker push ${{ vars.DOCKERHUB_USERNAME }}/liatrio-apprenticeship-exercise:snapshot
 
     - name: close container
       if: always()
