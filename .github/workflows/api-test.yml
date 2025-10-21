@@ -2,7 +2,7 @@ name: API base functionality
 
 on:
   workflow_run:
-    workflows: ["Docker Image CI"]
+    workflows: ["Docker Build"]
     types: [completed]
 
 jobs:
