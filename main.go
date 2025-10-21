@@ -22,7 +22,7 @@ func main() {
   app.Get("/", func(c *fiber.Ctx) error {
 		currentTime := time.Now()
 		unixTime := currentTime.UnixMilli()
-		routeResponse := fmt.Sprintf("{\"message\":\"%s\",\"timestamp\":%d,\"completed demo\":\"false\"}","My name is Zach Boggs",unixTime)
+		routeResponse := fmt.Sprintf("{\"message\":\"%s\",\"timestamp\":%d,\"completed demo\":false}","My name is Zach Boggs",unixTime)
 		return c.SendString(routeResponse)
   })
   
