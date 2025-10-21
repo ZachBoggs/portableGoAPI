@@ -11,7 +11,7 @@ COPY . .
 RUN go mod init go-module
 RUN go mod tidy
 
-WORKDIR ./cmd/gateway
+WORKDIR .
 
 # building the program
 RUN CGO_ENABLED=0 GOOS=linux go build -o /build/go-program
