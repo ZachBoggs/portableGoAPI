@@ -16,7 +16,7 @@ WORKDIR .
 # building the program
 RUN CGO_ENABLED=0 GOOS=linux go build -o /build/go-program
 
-# exposing port 80, I can also choose to use 8080 for http traffic but the automatic tester uses port 80
+# this program uses port 80 for the API and testing
 EXPOSE 80
 
 # Start the application
